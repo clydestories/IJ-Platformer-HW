@@ -31,6 +31,7 @@ public class CoinDisplay : MonoBehaviour
     private IEnumerator ChangeColor()
     {
         var wait = new WaitForSeconds(_delay);
+
         for (float i = _colorChangeDuration; i > 0; i -= _delay)
         {
             _coinsAmount.color = Color.Lerp(_startingColor, _endingColor, _colorBehaviour.Evaluate(i));
