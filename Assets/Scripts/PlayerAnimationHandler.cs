@@ -10,20 +10,11 @@ public class PlayerAnimationHandler : MonoBehaviour
 
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
-    private Movement _movement;
 
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
-        _movement = GetComponent<Movement>();
-    }
-
-    private void OnEnable()
-    {
-        _movement.Jumped.AddListener(OnJump);
-        _movement.StartedMoving.AddListener(OnStartMoving);
-        _movement.StoppedMoving.AddListener(OnStopMoving);
     }
 
     private void Update()
@@ -39,25 +30,18 @@ public class PlayerAnimationHandler : MonoBehaviour
         }
     }
 
-    private void OnStartMoving()
+    public void StartMovementAnimation()
     {
         _animator.SetBool(IsMoving, true);
     }
 
-    private void OnStopMoving()
+    public void StopMovementAnimation()
     {
         _animator.SetBool(IsMoving, false);
     }
 
-    private void OnJump()
+    public void StartJumpAnimation()
     {
         _animator.SetTrigger(Jump);
-    }
-
-    private void OnDisable()
-    {
-        _movement.Jumped.RemoveListener(OnJump);
-        _movement.StartedMoving.RemoveListener(OnStartMoving);
-        _movement.StoppedMoving.RemoveListener(OnStopMoving);
     }
 }

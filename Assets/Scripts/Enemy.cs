@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private List<Transform> _patrolPoints;
@@ -47,13 +48,6 @@ public class Enemy : MonoBehaviour
 
     private void AdjustSpriteFlip()
     {
-        if (_currentPoint.position.x > transform.position.x)
-        {
-            _spriteRenderer.flipX = true;
-        }
-        else
-        {
-            _spriteRenderer.flipX = false;
-        }
+        _spriteRenderer.flipX = _currentPoint.position.x > transform.position.x;
     }
 }

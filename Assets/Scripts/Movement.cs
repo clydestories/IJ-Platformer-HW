@@ -1,7 +1,7 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 [RequireComponent (typeof(Rigidbody2D))]
+[RequireComponent (typeof(PlayerAnimationHandler))]
 public class Movement : MonoBehaviour
 {
     private const string Horizontal = nameof(Horizontal);
@@ -12,15 +12,14 @@ public class Movement : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
     private bool _isGrounded = true;
+    private bool _isMoving = false;
     private float _direction;
-
-    public UnityEvent Jumped;
-    public UnityEvent StartedMoving;
-    public UnityEvent StoppedMoving;
+    private PlayerAnimationHandler _animationHandler;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+        _animationHandler = GetComponent<PlayerAnimationHandler>();
     }
 
     private void Update()
@@ -38,20 +37,24 @@ public class Movement : MonoBehaviour
         Move();
     }
 
-    private void Move()//Move to new input system
+    private void Move()
     {
         Vector2 veloclity = _rigidbody.velocity;
         veloclity.x = _direction * _speed;
         _rigidbody.velocity = veloclity;
 
-        if (Input.GetAxis(Horizontal) == 0)
+        if (_isMoving == true && _rigidbody.velocity.x == 0)
         {
-            StoppedMoving?.Invoke();
+            Debug.Log("Stopped");
+            _animationHandler.StopMovementAnimation();
         }
-        else//костыль
+        else if (_isMoving == false && Input.GetAxis(Horizontal) != 0)
         {
-            StartedMoving?.Invoke();
+            Debug.Log("Started");
+            _animationHandler.StartMovementAnimation();
         }
+
+        _isMoving = Input.GetAxis(Horizontal) != 0 && _rigidbody.velocity.x != 0;
     }
 
     private void Jump()
@@ -60,14 +63,12 @@ public class Movement : MonoBehaviour
         {
             _rigidbody.AddForce(_jumpForce * Vector2.up, ForceMode2D.Force);
             _isGrounded = false;
-            Jumped?.Invoke();
+            _animationHandler.StartJumpAnimation();
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)//Collision2D and ContactPoint2D and 3D research
     {
-        Debug.Log(Vector2.Angle(Vector2.up, collision.GetContact(0).normal));
-
         if (Vector2.Angle(Vector2.up, collision.GetContact(0).normal) < _maxClimbAngle)
         {
             _isGrounded = true;
