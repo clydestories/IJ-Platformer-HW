@@ -8,6 +8,8 @@ public class PlayerAnimationHandler : MonoBehaviour
     private const string IsMoving = nameof(IsMoving);
     private const string Horizontal = nameof(Horizontal);
 
+    [SerializeField] private ParticleSystem _attackEffect;
+
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
 
@@ -43,5 +45,10 @@ public class PlayerAnimationHandler : MonoBehaviour
     public void StartJumpAnimation()
     {
         _animator.SetTrigger(Jump);
+    }
+
+    public void StartAttackEffect()
+    {
+        _attackEffect.Play();
     }
 }

@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Wallet : MonoBehaviour
 {
@@ -8,7 +8,7 @@ public class Wallet : MonoBehaviour
     private int _allCoinsAmount;
     private int _coins;
 
-    public UnityEvent AllCoinsCollected;
+    public event Action AllCoinsCollected;
 
     private void Start()
     {

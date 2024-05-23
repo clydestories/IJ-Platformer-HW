@@ -43,7 +43,7 @@ public class Movement : MonoBehaviour
         veloclity.x = _direction * _speed;
         _rigidbody.velocity = veloclity;
 
-        if (_isMoving == true && _rigidbody.velocity.x == 0)
+        if (_isMoving == true && _rigidbody.velocity.x == 0)//??
         {
             Debug.Log("Stopped");
             _animationHandler.StopMovementAnimation();
