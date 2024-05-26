@@ -2721,6 +2721,7 @@ MonoBehaviour:
   _speed: 3
   _jumpForce: 300
   _maxClimbAngle: 60
+  _jumpKeys: 200000001101000077000000
 --- !u!114 &1659939717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2734,9 +2735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coinDisplay: {fileID: 2043968044}
-  AllCoinsCollected:
-    m_PersistentCalls:
-      m_Calls: []
+  _coinsContainer: {fileID: 129121837}
 --- !u!114 &1659939718
 MonoBehaviour:
   m_ObjectHideFlags: 0
