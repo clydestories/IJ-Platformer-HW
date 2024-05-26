@@ -7,17 +7,17 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        _wallet.AllCoinsCollected.AddListener(Win);
+        _wallet.AllCoinsCollected += Win;
+    }
+
+    private void OnDisable()
+    {
+        _wallet.AllCoinsCollected -= Win;
     }
 
     public void Win()
     {
         _winScreen.SetActive(true);
         Time.timeScale = 0f;
-    }
-
-    private void OnDisable()
-    {
-        _wallet.AllCoinsCollected.RemoveListener(Win);
     }
 }

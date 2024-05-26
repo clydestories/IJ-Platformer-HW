@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof(Rigidbody2D))]
@@ -9,6 +10,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _maxClimbAngle;
+    [SerializeField] private List<KeyCode> _jumpKeys = new();
 
     private Rigidbody2D _rigidbody;
     private bool _isGrounded = true;
@@ -26,15 +28,27 @@ public class Movement : MonoBehaviour
     {
         _direction = Input.GetAxis(Horizontal);
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))
+        foreach (KeyCode key in _jumpKeys)
         {
-            Jump();
+            if (Input.GetKeyDown(key))
+            {
+                Jump();
+                break;
+            }
         }
     }
 
     private void FixedUpdate()
     {
         Move();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)//Collision2D and ContactPoint2D and 3D research
+    {
+        if (Vector2.Angle(Vector2.up, collision.GetContact(0).normal) < _maxClimbAngle)
+        {
+            _isGrounded = true;
+        }
     }
 
     private void Move()
@@ -64,14 +78,6 @@ public class Movement : MonoBehaviour
             _rigidbody.AddForce(_jumpForce * Vector2.up, ForceMode2D.Force);
             _isGrounded = false;
             _animationHandler.StartJumpAnimation();
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)//Collision2D and ContactPoint2D and 3D research
-    {
-        if (Vector2.Angle(Vector2.up, collision.GetContact(0).normal) < _maxClimbAngle)
-        {
-            _isGrounded = true;
         }
     }
 }

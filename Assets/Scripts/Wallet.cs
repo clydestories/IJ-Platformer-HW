@@ -1,18 +1,19 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Wallet : MonoBehaviour
 {
     [SerializeField] private CoinDisplay _coinDisplay;
-    
+    [SerializeField] private Transform _coinsContainer;
+
     private int _allCoinsAmount;
     private int _coins;
 
-    public UnityEvent AllCoinsCollected;
+    public event Action AllCoinsCollected;
 
     private void Start()
     {
-        _allCoinsAmount = FindObjectsOfType<Coin>().Length;
+        _allCoinsAmount = _coinsContainer.childCount;
     }
 
     public void AddCoin()
