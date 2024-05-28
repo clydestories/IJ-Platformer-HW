@@ -2236,6 +2236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aadae9966700d884e982caf3da5bd132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _wallet: {fileID: 1659939717}
 --- !u!61 &1352934495
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -19,7 +19,7 @@ public class Wallet : MonoBehaviour
     public void AddCoin()
     {
         _coins++;
-        _coinDisplay.UpdateCoins(_coins);
+        _coinDisplay.UpdateVisual(_coins);
 
         if (_coins == _allCoinsAmount)
         {

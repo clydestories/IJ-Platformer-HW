@@ -13,19 +13,16 @@ public class CoinDisplay : MonoBehaviour
 
     private Coroutine _coroutine;
 
-    public void UpdateCoins(int amount)
+    public void UpdateVisual(int amount)
     {
         _coinsAmount.text = amount.ToString();
 
-        if (_coroutine == null)
-        {
-            _coroutine = StartCoroutine(ChangeColor());
-        }
-        else
+        if (_coroutine != null)
         {
             StopCoroutine(_coroutine);
-            _coroutine = StartCoroutine(ChangeColor());
         }
+
+        _coroutine = StartCoroutine(ChangeColor());
     }
 
     private IEnumerator ChangeColor()

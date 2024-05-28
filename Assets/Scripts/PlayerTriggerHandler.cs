@@ -3,12 +3,7 @@ using UnityEngine;
 [RequireComponent (typeof(Collider2D))]
 public class PlayerTriggerHandler : MonoBehaviour
 {
-    private Wallet _wallet;
-
-    private void Awake()
-    {
-        _wallet = GetComponentInParent<Wallet>();
-    }
+    [SerializeField] private Wallet _wallet;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
