@@ -1,22 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(SpriteRenderer))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private List<Transform> _patrolPoints;
     [SerializeField] private float _speed;
 
     private Transform _currentPoint;
-    private Rigidbody2D _rigidbody;
-    private SpriteRenderer _spriteRenderer;
-
-    private void Awake()
-    {
-        _rigidbody = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-    }
+    private float yRotationLookingLeft = 0;
+    private float yRotationLookingRight = 180;
 
     private void Start()
     {
@@ -37,17 +29,24 @@ public class Enemy : MonoBehaviour
 
     private void Move()
     {
-        _rigidbody.position = Vector2.MoveTowards(transform.position, _currentPoint.position, _speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, _currentPoint.position, _speed * Time.deltaTime);
     }
 
     private void ChangePatrolPoint()
     {
         _currentPoint = _patrolPoints[Random.Range(0, _patrolPoints.Count)];
-        AdjustSpriteFlip();
+        FaceTarget();
     }
 
-    private void AdjustSpriteFlip()
+    private void FaceTarget()
     {
-        _spriteRenderer.flipX = _currentPoint.position.x > transform.position.x;
+        if (_currentPoint.position.x > transform.position.x)
+        {
+            transform.rotation = Quaternion.Euler(transform.rotation.x, yRotationLookingRight, transform.rotation.z);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(transform.rotation.x, yRotationLookingLeft, transform.rotation.z);
+        }
     }
 }
