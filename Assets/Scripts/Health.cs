@@ -10,6 +10,8 @@ public abstract class Health : MonoBehaviour
     private float _health;
 
     public event Action Died;
+    //health as property
+    //maxhealth as property
 
     private void Start()
     {
@@ -43,7 +45,7 @@ public abstract class Health : MonoBehaviour
 
         if (_healthBar != null)
         {
-            _healthBar.SetBarValue(_health, _maxHealth);
+            _healthBar.SetBarValue(_health, _maxHealth);//event
         }
     }
 
