@@ -8,8 +8,8 @@ public class PlayerAnimator : MonoBehaviour
 
     private Animator _animator;
     private float _direction = 0f;
-    private float yRotationLookingLeft = 180;
-    private float yRotationLookingRight = 0;
+    private float _yRotationLookingLeft = 180;
+    private float _yRotationLookingRight = 0;
 
     private void Awake()
     {
@@ -20,12 +20,12 @@ public class PlayerAnimator : MonoBehaviour
     {
         if (_direction > 0)
         {
-            transform.rotation = Quaternion.Euler(transform.rotation.x, yRotationLookingRight, transform.rotation.z);
+            transform.rotation = Quaternion.Euler(transform.rotation.x, _yRotationLookingRight, transform.rotation.z);
         }
         
         if (_direction < 0)
         {
-            transform.rotation = Quaternion.Euler(transform.rotation.x, yRotationLookingLeft, transform.rotation.z);
+            transform.rotation = Quaternion.Euler(transform.rotation.x, _yRotationLookingLeft, transform.rotation.z);
         }
     }
 
