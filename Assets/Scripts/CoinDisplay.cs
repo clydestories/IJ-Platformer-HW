@@ -11,7 +11,7 @@ public class CoinDisplay : MonoBehaviour
     [SerializeField] private float _delay;
     [SerializeField] private float _colorChangeDuration;
 
-    private Coroutine _coroutine;
+    private Coroutine _coroutine; 
 
     public void UpdateVisual(int amount)
     {

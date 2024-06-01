@@ -1,23 +1,75 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private List<Transform> _patrolPoints;
     [SerializeField] private float _speed;
+    [SerializeField] private float _damage;
+    [SerializeField] private float _detectDistance;
+    [SerializeField] private LayerMask _ignoreLayers;
 
     private Transform _currentPoint;
-    private Quaternion _rotationLookingLeft = Quaternion.Euler(0, 0, 0);
-    private Quaternion _rotationLookingRight = Quaternion.Euler(0, 180, 0);
+    private Rigidbody2D _rigidbody;
+    private SpriteRenderer _spriteRenderer;
+    private Transform _player;
+    private bool _isPlayerNoticed = false;
+
+    public float Damage => _damage;
+
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _player = FindAnyObjectByType<PlayerHealth>().transform;
+    }
 
     private void Start()
     {
         ChangePatrolPoint();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (Vector2.Distance(transform.position, _currentPoint.position) > 1)
+        SearchForPlayer();
+
+        if (_isPlayerNoticed)
+        {
+            ChasePlayer();
+        }
+        else
+        {
+            Patrol();
+        }
+    }
+
+    private void SearchForPlayer()
+    {
+        _isPlayerNoticed = false;
+
+        if (Vector2.Distance(transform.position, _player.position) < _detectDistance)
+        {
+            RaycastHit2D hit = Physics2D.Linecast(transform.position, _player.position, ~_ignoreLayers);//Line ray разница LineCast и RayCast. Слои Ingore raycast. Разница Layer и LayerMask
+            Debug.DrawLine(transform.position, _player.position);
+
+            if (hit.collider != null && hit.collider.TryGetComponent(out PlayerHealth playerHealth))
+            {
+                Debug.Log($"Found {gameObject.name}");
+                AdjustSpriteFlip();
+                _isPlayerNoticed = true;
+            }
+            else
+            {
+                Debug.Log($"{hit.collider.gameObject.name} {gameObject.name}");
+            }
+        }
+    }
+
+    private void Patrol()
+    {
+        if (Vector2.Distance(transform.position, _currentPoint.position) > 1 && _currentPoint != _player)
         {
             Move();
         }
@@ -27,26 +79,25 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Move()
-    {
-        transform.position = Vector2.MoveTowards(transform.position, _currentPoint.position, _speed * Time.deltaTime);
-    }
-
     private void ChangePatrolPoint()
     {
         _currentPoint = _patrolPoints[Random.Range(0, _patrolPoints.Count)];
-        FaceTarget();
+        AdjustSpriteFlip();
     }
 
-    private void FaceTarget()
+    private void AdjustSpriteFlip()
     {
-        if (_currentPoint.position.x > transform.position.x)
-        {
-            transform.rotation = _rotationLookingRight;
-        }
-        else
-        {
-            transform.rotation = _rotationLookingLeft;
-        }
+        _spriteRenderer.flipX = _currentPoint.position.x > transform.position.x;
+    }
+
+    private void Move()
+    {
+        _rigidbody.position = Vector2.MoveTowards(transform.position, _currentPoint.position, _speed * Time.deltaTime);
+    }
+
+    private void ChasePlayer()
+    {
+        _currentPoint = _player;
+        Move();
     }
 }
