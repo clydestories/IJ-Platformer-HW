@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject _winScreen;
+    [SerializeField] private WinScreen _winScreen;
     [SerializeField] private Wallet _wallet;
 
     private void OnEnable()
@@ -15,9 +15,9 @@ public class GameManager : MonoBehaviour
         _wallet.AllCoinsCollected -= Win;
     }
 
-    public void Win()
+    private void Win()
     {
-        _winScreen.SetActive(true);
+        _winScreen.gameObject.SetActive(true);
         Time.timeScale = 0f;
     }
 }

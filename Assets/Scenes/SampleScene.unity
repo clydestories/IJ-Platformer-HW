@@ -1367,7 +1367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0718195b2d0b57e439530bc415ce4c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _winScreen: {fileID: 1329890080}
+  _winScreen: {fileID: 1329890085}
   _wallet: {fileID: 1659939717}
 --- !u!4 &808230048
 Transform:
@@ -2127,6 +2127,7 @@ GameObject:
   - component: {fileID: 1329890083}
   - component: {fileID: 1329890082}
   - component: {fileID: 1329890084}
+  - component: {fileID: 1329890085}
   m_Layer: 5
   m_Name: Win Screen
   m_TagString: Untagged
@@ -2207,6 +2208,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.6156863}
   m_EffectDistance: {x: -8, y: -8}
   m_UseGraphicAlpha: 0
+--- !u!114 &1329890085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329890080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6acfe1af4e087b4198606ca9af0993b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1352934492
 GameObject:
   m_ObjectHideFlags: 0

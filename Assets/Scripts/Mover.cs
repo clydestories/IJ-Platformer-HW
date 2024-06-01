@@ -9,7 +9,7 @@ public class Mover : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
     private bool _isGrounded = true;
-    private float _direction = 0;
+    private float _directionX = 0;
 
     private void Awake()
     {
@@ -32,7 +32,7 @@ public class Mover : MonoBehaviour
     private void Move()
     {
         Vector2 veloclity = _rigidbody.velocity;
-        veloclity.x = _direction * _speed;
+        veloclity.x = _directionX * _speed;
         _rigidbody.velocity = veloclity;
     }
 
@@ -50,6 +50,6 @@ public class Mover : MonoBehaviour
 
     public void SetDirection(float direction)
     {
-        _direction = direction;
+        _directionX = direction;
     }
 }

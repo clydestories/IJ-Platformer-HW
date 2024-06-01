@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     private PlayerAnimator _playerAnimator;
     private Rigidbody2D _rigidbody;
     private bool _isMoving = false;
-    private float _currentDirection = 0f;
+    private float _directionX = 0f;
 
     private void Awake()
     {
@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        _isMoving = _currentDirection != 0 && _rigidbody.velocity.x != 0;
+        _isMoving = _directionX != 0 && _rigidbody.velocity.x != 0;
 
         if (_isMoving == false)
         {
@@ -50,6 +50,6 @@ public class Player : MonoBehaviour
     {
         _mover.SetDirection(direction);
         _playerAnimator.SetDirection(direction);
-        _currentDirection = direction;
+        _directionX = direction;
     }
 }

@@ -7,8 +7,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _speed;
 
     private Transform _currentPoint;
-    private float yRotationLookingLeft = 0;
-    private float yRotationLookingRight = 180;
+    private Quaternion _rotationLookingLeft = Quaternion.Euler(0, 0, 0);
+    private Quaternion _rotationLookingRight = Quaternion.Euler(0, 180, 0);
 
     private void Start()
     {
@@ -42,11 +42,11 @@ public class Enemy : MonoBehaviour
     {
         if (_currentPoint.position.x > transform.position.x)
         {
-            transform.rotation = Quaternion.Euler(transform.rotation.x, yRotationLookingRight, transform.rotation.z);
+            transform.rotation = _rotationLookingRight;
         }
         else
         {
-            transform.rotation = Quaternion.Euler(transform.rotation.x, yRotationLookingLeft, transform.rotation.z);
+            transform.rotation = _rotationLookingLeft;
         }
     }
 }
