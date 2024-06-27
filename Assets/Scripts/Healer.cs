@@ -1,8 +1,11 @@
 using UnityEngine;
 
-public class Healer : MonoBehaviour
+public class Healer : Collectable<float>
 {
-    [SerializeField] private float _amount;
+    [SerializeField] float _health;
 
-    public float Amount => _amount;
+    protected override float OnUsed()
+    {
+        return _health;
+    }
 }

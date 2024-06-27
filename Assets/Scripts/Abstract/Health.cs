@@ -5,48 +5,57 @@ using UnityEngine;
 public abstract class Health : MonoBehaviour
 {
     [SerializeField] private float _maxHealth;
-    [SerializeField] private BarDisplay _healthBar;
 
     private float _health;
 
     public event Action Died;
-    //health as property
-    //maxhealth as property
+    public event Action<float, float> ValueChanged;
+
+    public float Value
+    {
+        get
+        {
+            return _health;
+        }
+        private set
+        {
+            _health = Mathf.Clamp(value, 0, _maxHealth);
+        }
+    }
 
     private void Start()
     {
         _health = _maxHealth;
+        ValueChanged?.Invoke(Value, _maxHealth);
     }
 
     public void TakeDamage(float damage)
     {
-        _health -= damage;
-
-        if (_health <= 0)
+        if (damage < 0)
         {
-            _health = 0;
+            throw new Exception("Damage of a negative amount");
+        }
+
+        Value -= damage;
+
+        if (_health == 0)
+        {
             Die();
         }
 
-        if (_healthBar != null)
-        {
-            _healthBar.SetBarValue(_health, _maxHealth);
-        }
+        ValueChanged?.Invoke(Value, _maxHealth);
     }
 
     public void Heal(float amount)
     {
-        _health += amount;
-
-        if (_health > _maxHealth)
+        if (amount < 0)
         {
-            _health = _maxHealth;
+            throw new Exception("Heal of a negative amount");
         }
 
-        if (_healthBar != null)
-        {
-            _healthBar.SetBarValue(_health, _maxHealth);//event
-        }
+        Value += amount;
+
+        ValueChanged?.Invoke(Value, _maxHealth);
     }
 
     protected virtual void Die()

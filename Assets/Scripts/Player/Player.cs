@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Mover), typeof(PlayerAnimator), typeof(Rigidbody2D))]
+[RequireComponent(typeof(Attacker))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private InputReader _input;
@@ -8,6 +9,7 @@ public class Player : MonoBehaviour
     private Mover _mover;
     private PlayerAnimator _playerAnimator;
     private Rigidbody2D _rigidbody;
+    private Attacker _attacker;
     private bool _isMoving = false;
     private float _directionX = 0f;
 
@@ -16,12 +18,14 @@ public class Player : MonoBehaviour
         _mover = GetComponent<Mover>();
         _playerAnimator = GetComponent<PlayerAnimator>();
         _rigidbody = GetComponent<Rigidbody2D>();
+        _attacker = GetComponent<Attacker>();
     }
 
     private void OnEnable()
     {
         _input.Jumped += Jump;
         _input.Moved += Move;
+        _input.Attacked += Attack;
     }
 
     private void Update()
@@ -38,6 +42,13 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        _input.Jumped -= Jump;
+        _input.Moved -= Move;
+        _input.Attacked -= Attack;
+    }
+
     private void Jump()
     {
         if (_mover.TryJump())
@@ -51,5 +62,11 @@ public class Player : MonoBehaviour
         _mover.SetDirection(direction);
         _playerAnimator.SetDirection(direction);
         _directionX = direction;
+    }
+
+    private void Attack()
+    {
+        _attacker.Attack();
+        _playerAnimator.PlayAttackEffect();
     }
 }

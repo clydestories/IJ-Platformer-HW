@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private List<Transform> _patrolPoints;
+    [SerializeField] private Transform _player;
     [SerializeField] private float _speed;
     [SerializeField] private float _damage;
     [SerializeField] private float _detectDistance;
@@ -14,7 +14,6 @@ public class Enemy : MonoBehaviour
     private Transform _currentPoint;
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
-    private Transform _player;
     private bool _isPlayerNoticed = false;
 
     public float Damage => _damage;
@@ -23,7 +22,6 @@ public class Enemy : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _player = FindAnyObjectByType<PlayerHealth>().transform;
     }
 
     private void Start()

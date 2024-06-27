@@ -6,6 +6,8 @@ public class PlayerAnimator : MonoBehaviour
     private readonly int Jump = Animator.StringToHash(nameof(Jump));
     private readonly int IsMoving = Animator.StringToHash(nameof(IsMoving));
 
+    [SerializeField] private ParticleSystem _attackEffect;
+
     private Animator _animator;
     private float _directionX = 0f;
     private Quaternion _rotationLookingLeft = Quaternion.Euler(0, 180, 0);
@@ -47,5 +49,10 @@ public class PlayerAnimator : MonoBehaviour
     public void SetDirection(float direction)
     {
         _directionX = direction;
+    }
+
+    public void PlayAttackEffect()
+    {
+        _attackEffect.Play();
     }
 }
