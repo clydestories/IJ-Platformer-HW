@@ -21,7 +21,7 @@ public class Mover : MonoBehaviour
         Move();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)//Collision2D and ContactPoint2D and 3D research
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (Vector2.Angle(Vector2.up, collision.GetContact(0).normal) < _maxClimbAngle)
         {

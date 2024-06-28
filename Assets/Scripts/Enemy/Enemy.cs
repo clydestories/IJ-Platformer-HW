@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
 
         if (Vector2.Distance(transform.position, _player.position) < _detectDistance)
         {
-            RaycastHit2D hit = Physics2D.Linecast(transform.position, _player.position, ~_ignoreLayers);//Line ray разница LineCast и RayCast. Слои Ingore raycast. Разница Layer и LayerMask
+            RaycastHit2D hit = Physics2D.Linecast(transform.position, _player.position, ~_ignoreLayers);
             Debug.DrawLine(transform.position, _player.position);
 
             if (hit.collider != null && hit.collider.TryGetComponent(out PlayerHealth playerHealth))
