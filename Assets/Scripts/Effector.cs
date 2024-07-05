@@ -9,12 +9,12 @@ public class Effector : MonoBehaviour
 
     private void Awake()
     {
-        if (_audio != null)
+        if (_audio == null)
         {
             Debug.LogWarning($"Audio Source not initialized in {gameObject.name}");
         }
 
-        if (_particleEffect != null)
+        if (_particleEffect == null)
         {
             Debug.LogWarning($"Particle System not initialized in {gameObject.name}");
         }

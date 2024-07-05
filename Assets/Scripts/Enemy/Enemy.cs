@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer))]
+[RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer), typeof(Health))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private List<Transform> _patrolPoints;
@@ -14,14 +14,19 @@ public class Enemy : MonoBehaviour
     private Transform _currentPoint;
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
+    private Health _health;
     private bool _isPlayerNoticed = false;
-
-    public float Damage => _damage;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _health = GetComponent<Health>();
+    }
+
+    private void OnEnable()
+    {
+        _health.Died += OnDeath;
     }
 
     private void Start()
@@ -41,6 +46,19 @@ public class Enemy : MonoBehaviour
         {
             Patrol();
         }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.TryGetComponent(out PlayerHealth player))
+        {
+            player.TakeDamage(_damage * Time.deltaTime);
+        }
+    }
+
+    private void OnDisable()
+    {
+        _health.Died -= OnDeath;
     }
 
     private void SearchForPlayer()
@@ -97,5 +115,10 @@ public class Enemy : MonoBehaviour
     {
         _currentPoint = _player;
         Move();
+    }
+
+    private void OnDeath()
+    {
+        Destroy(gameObject);
     }
 }

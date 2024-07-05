@@ -58,15 +58,8 @@ public abstract class Health : MonoBehaviour
         ValueChanged?.Invoke(Value, _maxHealth);
     }
 
-    protected virtual void Die()
+    protected void Die()
     {
         Died?.Invoke();
-
-        MonoBehaviour[] components = GetComponentsInChildren<MonoBehaviour>();
-
-        foreach (var component in components)
-        {
-            component.enabled = false;
-        }
     }
 }
