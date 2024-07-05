@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
         {
             _playerAnimator.StopMovementAnimation();
         }
-        else if (_isMoving == true)
+        else if (_isMoving)
         {
             _playerAnimator.StartMovementAnimation();
         }

@@ -10,15 +10,17 @@ public class PlayerTriggerHandler : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out ICollectable collectable))
         {
-            if (collectable is Coin coin)
-            {
-                _wallet.AddCoins(coin.Use());
-            }
-
-            if (collectable is Healer healer)
-            {
-                _playerHealth.Heal(healer.Use());
-            }
+            Collect((dynamic)collectable);
         }
+    }
+
+    private void Collect(Coin coin)
+    {
+        _wallet.AddCoins(coin.Use());
+    }
+
+    private void Collect(Healer healer)
+    {
+        _playerHealth.Heal(healer.Use());
     }
 }

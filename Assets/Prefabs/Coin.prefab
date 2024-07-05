@@ -5056,9 +5056,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcafaf7e66a770e4d8ae5ed4a06c92e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _value: 1
   _effect: {fileID: 1179892077565612823}
   _renderer: {fileID: 7288690766159376555}
-  _coins: 1
 --- !u!82 &5334904350772247476
 AudioSource:
   m_ObjectHideFlags: 0

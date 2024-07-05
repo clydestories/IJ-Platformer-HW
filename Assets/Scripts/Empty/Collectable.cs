@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public abstract class Collectable<T> : MonoBehaviour, ICollectable<T>
 {
+    [SerializeField] private T _value;
     [SerializeField] private Effector _effect;
     [SerializeField] private Renderer _renderer;
 
@@ -30,5 +31,8 @@ public abstract class Collectable<T> : MonoBehaviour, ICollectable<T>
         return OnUsed();
     }
 
-    protected abstract T OnUsed();
+    protected virtual T OnUsed()
+    {
+        return _value;
+    }
 }

@@ -375,6 +375,7 @@ MonoBehaviour:
   _patrolPoints:
   - {fileID: 0}
   - {fileID: 0}
+  _player: {fileID: 0}
   _speed: 3
   _damage: 30
   _detectDistance: 10
@@ -498,6 +499,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bar: {fileID: 1094413448767564303}
   _carier: {fileID: 1143973840564817669}
+  _delay: 0.01
+  _step: 0.01
 --- !u!1 &7639836128323723667
 GameObject:
   m_ObjectHideFlags: 0

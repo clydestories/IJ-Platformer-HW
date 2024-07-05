@@ -5199,6 +5199,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f48a4b51a06c0b4888d92c3659bde5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _value: 30
   _effect: {fileID: 6627171842255236164}
   _renderer: {fileID: 4970597596350218365}
-  _health: 30

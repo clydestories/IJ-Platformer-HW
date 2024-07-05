@@ -517,6 +517,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bar: {fileID: 86236701}
   _carier: {fileID: 1659939721}
+  _delay: 0.01
+  _step: 0.01
 --- !u!114 &86236701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23645,6 +23647,14 @@ PrefabInstance:
     - target: {fileID: 2765621864205267150, guid: 48643fd5adedaa640b0a49434f86ad33, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2843124872960920499, guid: 48643fd5adedaa640b0a49434f86ad33, type: 3}
+      propertyPath: _step
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 2843124872960920499, guid: 48643fd5adedaa640b0a49434f86ad33, type: 3}
+      propertyPath: _delay
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 5239874568030022938, guid: 48643fd5adedaa640b0a49434f86ad33, type: 3}
       propertyPath: m_Name
