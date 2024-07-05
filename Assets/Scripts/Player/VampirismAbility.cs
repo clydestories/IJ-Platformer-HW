@@ -1,5 +1,5 @@
 using System;
-using Unity.Burst;
+using System.Collections;
 using UnityEngine;
 
 public class VampirismAbility : MonoBehaviour
@@ -9,14 +9,14 @@ public class VampirismAbility : MonoBehaviour
     [SerializeField] private float _damage;
 
     private readonly float _maxCharge = 6f;
-    private readonly float _minUseCharge = 0f;
 
     private bool _isActive = false;
     private float _charge;
+    private Coroutine _ability;
 
     public event Action<float, float> ValueChanged;
-    public event Action StartedUsing;
     public event Action StoppedUsing;
+    public event Action StartedUsing;
 
     private void Start()
     {
@@ -27,7 +27,7 @@ public class VampirismAbility : MonoBehaviour
     {
         if (_isActive)
         {
-            if (_charge > _minUseCharge)
+            if (_charge > 0)
             {
                 Use();
             }
@@ -40,14 +40,20 @@ public class VampirismAbility : MonoBehaviour
 
     public void StartAbility()
     {
-        _isActive = true;
-        StartedUsing?.Invoke();
+        if (_ability == null)
+        {
+            _ability = StartCoroutine(Drain());
+        }
     }
 
-    public void StopAbility()
+    private IEnumerator Drain()
     {
-        _isActive = false;
+        StartedUsing?.Invoke();
+        _isActive = true;
+        yield return new WaitWhile(() => _charge > 0);
         StoppedUsing?.Invoke();
+        _isActive = false;
+        _ability = null;
     }
 
     private void Use()
@@ -60,10 +66,12 @@ public class VampirismAbility : MonoBehaviour
             {
                 enemy.TakeDamage(_damage * Time.deltaTime);
                 _caster.Heal(_damage * Time.deltaTime);
-                _charge -= Time.deltaTime;
-                ValueChanged?.Invoke(_charge, _maxCharge);
+                break;
             }
         }
+
+        _charge -= Time.deltaTime;
+        ValueChanged?.Invoke(_charge, _maxCharge);
     }
 
     private void Recharge()

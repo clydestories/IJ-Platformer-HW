@@ -30,8 +30,7 @@ public class Player : MonoBehaviour
         _input.Jumped += Jump;
         _input.Moved += Move;
         _input.Attacked += Attack;
-        _input.StartedAbility += StartAbility;
-        _input.StoppedAbility += StopAbility;
+        _input.UsedAbility += _vampirism.StartAbility;
         _health.Died += OnDeath;
     }
 
@@ -54,8 +53,7 @@ public class Player : MonoBehaviour
         _input.Jumped -= Jump;
         _input.Moved -= Move;
         _input.Attacked -= Attack;
-        _input.StartedAbility -= StartAbility;
-        _input.StoppedAbility -= StopAbility;
+        _input.UsedAbility -= _vampirism.StartAbility;
         _health.Died += OnDeath;
     }
 
@@ -78,16 +76,6 @@ public class Player : MonoBehaviour
     {
         _attacker.Attack();
         _playerAnimator.PlayAttackEffect();
-    }
-
-    private void StartAbility()
-    {
-        _vampirism.StartAbility();
-    }
-
-    private void StopAbility()
-    {
-        _vampirism.StopAbility();
     }
 
     private void OnDeath()

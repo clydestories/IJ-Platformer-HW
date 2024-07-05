@@ -15,8 +15,7 @@ public class InputReader : MonoBehaviour
     public event Action<float> Moved;
     public event Action Jumped;
     public event Action Attacked;
-    public event Action StartedAbility;
-    public event Action StoppedAbility;
+    public event Action UsedAbility;
 
     private void Update()
     {
@@ -44,13 +43,7 @@ public class InputReader : MonoBehaviour
         {
             if (Input.GetKeyDown(key))
             {
-                StartedAbility?.Invoke();
-                break;
-            }
-
-            if (Input.GetKeyUp(key))
-            {
-                StoppedAbility?.Invoke();
+                UsedAbility?.Invoke();
                 break;
             }
         }
